@@ -1,8 +1,8 @@
-package com.company;
+package kapitel4;
 
 import javax.swing.*;
 
-public class Main {
+public class helloworld {
 
     public static void main(String[] args) {
         System.out.print("hello");
