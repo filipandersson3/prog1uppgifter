@@ -12,10 +12,11 @@ public class ovning51 {
         int n = Integer.parseInt(JOptionPane.showInputDialog("n?"));
         int summa = 0;
         int k = 1;
-        while (k <= n) {
-            summa = summa + k;
+        while (k <= n*n) {
+            summa = summa + k*k;
             k = k + 1;
         }
+        JOptionPane.showMessageDialog(null, "Summan blir " + summa);
 
 
     }
