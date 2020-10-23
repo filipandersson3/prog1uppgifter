@@ -11,7 +11,7 @@ public class ovning56 {
                 break;
             }
         }
-        if (i == 0){
+        if (i >= 0){
             i++;
             JOptionPane.showMessageDialog(null, "Första vita tecken finns på plats nr " + i);
         }else{
