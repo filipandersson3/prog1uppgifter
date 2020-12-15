@@ -4,12 +4,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class CreateFile {
-    public static void main(String[] args) {
+public class ReadWriteLibrary {
+    public static void WriteToFile(String textInput) {
         try {
+            for (int i = 0; textInput.length() > 120; i++) {
+                if (textInput.charAt(i*120) == ' ') {
+                    System.out.println("whitespace vid " + i);
+                }
+            }
             FileWriter myWriter = new FileWriter("src/testkod/textfile.txt");
-            Scanner in = new Scanner(System.in);
-            String textInput = in.nextLine();
             myWriter.write(textInput);
             myWriter.close();
             System.out.println("Wrote to file.");
