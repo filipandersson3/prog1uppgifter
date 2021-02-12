@@ -1,7 +1,6 @@
-package testkod;
+package testkod.notepad;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
 
 public class Notepad {
 
