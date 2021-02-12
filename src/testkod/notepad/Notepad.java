@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.FileReader;
 
 public class Notepad {
 
@@ -22,6 +23,7 @@ public class Notepad {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("new");
+                textArea1.setText("");
             }
         });
         menuItem2.addActionListener(new ActionListener() {
