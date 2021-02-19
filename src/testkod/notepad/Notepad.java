@@ -5,10 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Notepad {
     private JPanel panel1;
@@ -36,7 +33,7 @@ public class Notepad {
         menuItem2.addActionListener(new ActionListener() {  //Save file
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("save");
+                saveFile();
             }
         });
         menuItem3.addActionListener(new ActionListener() {  //Open file
@@ -45,6 +42,27 @@ public class Notepad {
                 readFile();
             }
         });
+    }
+
+    private void saveFile() {
+        JFileChooser fc = new JFileChooser();
+        int result = fc.showOpenDialog(null);
+        if (result!=JFileChooser.APPROVE_OPTION){
+            System.out.println("ingen fil valdes");
+            System.exit(0);
+        }
+        String filename = fc.getSelectedFile().getAbsolutePath();
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter outFile = new PrintWriter(bw);
+        outFile.print(textArea1.getText());
+        outFile.flush();
+        outFile.close();
     }
 
     private void readFile() {
