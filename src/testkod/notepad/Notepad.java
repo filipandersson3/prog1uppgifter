@@ -12,51 +12,89 @@ public class Notepad {
     private JTextArea textArea1;
     private JScrollPane scrollPane1;
     private JMenuBar menuBar;
+    private String filename = "";
 
     public Notepad() {
         menuBar = new JMenuBar();
         JMenu menu1 = new JMenu("File");
         JMenuItem menuItem1 = new JMenuItem("New");
         menu1.add(menuItem1);
-        JMenuItem menuItem2 = new JMenuItem("Save");
-        menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        JMenuItem menuItem = new JMenuItem("Save");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        menu1.add(menuItem);
+        JMenuItem menuItem2 = new JMenuItem("Save as...");
         menu1.add(menuItem2);
         JMenuItem menuItem3 = new JMenuItem("Open...");
         menu1.add(menuItem3);
         menuBar.add(menu1);
-        menuItem1.addActionListener(new ActionListener() {  //New file
+        menuItem1.addActionListener(new NewAL());
+        menuItem.addActionListener(new SaveAL());
+        menuItem2.addActionListener(new SaveAsAL());
+        menuItem3.addActionListener(new OpenAL());
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Notepad");
+        Notepad notepad = new Notepad();
+        frame.setContentPane(notepad.panel1);
+        frame.setJMenuBar(notepad.menuBar);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private class NewAL implements ActionListener { //New file
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea1.setText("");
+                filename = "";
             }
-        });
-        menuItem2.addActionListener(new ActionListener() {  //Save file
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveFile();
+    }
+    private class SaveAL implements ActionListener { //Save file
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            save();
+        }
+    }
+    private void save() {
+        if (filename.equals("")) {
+            saveAs();
+        } else {
+            FileWriter fw = null;
+            try {
+                fw = new FileWriter(filename);
+            } catch (IOException f) {
+                f.printStackTrace();
             }
-        });
-        menuItem3.addActionListener(new ActionListener() {  //Open file
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                readFile();
-            }
-        });
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter outFile = new PrintWriter(bw);
+            outFile.print(textArea1.getText());
+            outFile.flush();
+            outFile.close();
+        }
     }
 
-    private void saveFile() {
+    private class SaveAsAL implements ActionListener { //Save As file
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            saveAs();
+        }
+    }
+
+    private void saveAs() {
         JFileChooser fc = new JFileChooser();
         int result = fc.showOpenDialog(null);
         if (result!=JFileChooser.APPROVE_OPTION){
-            System.out.println("ingen fil valdes");
-            System.exit(0);
+            JOptionPane.showConfirmDialog(null,
+                    "No file was chosen", "Error",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        String filename = fc.getSelectedFile().getAbsolutePath();
+        filename = fc.getSelectedFile().getAbsolutePath();
         FileWriter fw = null;
         try {
             fw = new FileWriter(filename);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException f) {
+            f.printStackTrace();
         }
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter outFile = new PrintWriter(bw);
@@ -65,14 +103,22 @@ public class Notepad {
         outFile.close();
     }
 
-    private void readFile() {
+    private class OpenAL implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            open();
+        }
+    }
+
+    private void open() {
         JFileChooser fc = new JFileChooser();
         int result = fc.showOpenDialog(null);
         if (result!=JFileChooser.APPROVE_OPTION){
-            System.out.println("ingen fil valdes");
-            System.exit(0);
+            JOptionPane.showConfirmDialog(null,
+                    "No file was chosen", "Error",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        String filename = fc.getSelectedFile().getAbsolutePath();
+        filename = fc.getSelectedFile().getAbsolutePath();
         FileReader fr = null;
         textArea1.setText("");
         try {
@@ -91,15 +137,5 @@ public class Notepad {
         } catch (IOException f) {
             f.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Notepad");
-        Notepad notepad = new Notepad();
-        frame.setContentPane(notepad.panel1);
-        frame.setJMenuBar(notepad.menuBar);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 }
