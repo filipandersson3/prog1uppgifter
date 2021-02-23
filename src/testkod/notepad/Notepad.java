@@ -26,11 +26,15 @@ public class Notepad {
         menu1.add(menuItem2);
         JMenuItem menuItem3 = new JMenuItem("Open...");
         menu1.add(menuItem3);
+        menu1.addSeparator();
+        JMenuItem menuItem4 = new JMenuItem("Exit");
+        menu1.add(menuItem4);
         menuBar.add(menu1);
         menuItem1.addActionListener(new NewAL());
         menuItem.addActionListener(new SaveAL());
         menuItem2.addActionListener(new SaveAsAL());
         menuItem3.addActionListener(new OpenAL());
+        menuItem4.addActionListener(new ExitAL());
     }
 
     public static void main(String[] args) {
@@ -136,6 +140,13 @@ public class Notepad {
             inFile.close();
         } catch (IOException f) {
             f.printStackTrace();
+        }
+    }
+
+    private class ExitAL implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
 }
