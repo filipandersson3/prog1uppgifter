@@ -3,7 +3,7 @@ package testkod.komplexatal;
 public class KomplexTest {
 
     public static void main(String[] args) {
-        Komplex a = new Komplex(3.0,2.0);
+        Komplex a = new Komplex(-3.0,0.0);
         Komplex b = new Komplex(4.0,1.0);
 
         System.out.println("talet borde vara 3 + 2i:\n" + a);
@@ -16,7 +16,7 @@ public class KomplexTest {
             System.out.println("add funkar!!");
         }
 
-        /*c = a.multiply(b);
+        c = a.multiply(b);
         d = new Komplex(10,11);
 
         System.out.println(c);
@@ -24,9 +24,9 @@ public class KomplexTest {
             System.out.println("multiply funkar!!");
         }
 
-        System.out.println("Argumentet till 3+2i är " + a.arg());
+        System.out.println("Argumentet till " + a.toString() + " är " + a.arg());
         if (a.arg() == Math.atan(2.0/3)) {
             System.out.println("arg() funkar!!");
-        }*/
+        }
     }
 }
