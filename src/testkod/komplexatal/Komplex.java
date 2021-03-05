@@ -33,21 +33,30 @@ public class Komplex {
     public Komplex add(Komplex k2) {
         return new Komplex(reelt + k2.reelt,imaginart + k2.imaginart);
     }
+    public Komplex subtract(Komplex k2) {
+        return new Komplex(reelt - k2.reelt,imaginart - k2.imaginart);
+    }
     public Komplex multiply(Komplex k2) {
         return new Komplex((reelt*k2.reelt)-(imaginart*k2.imaginart),imaginart*k2.reelt + k2.imaginart*reelt);
     }
     public double arg() {
-        if (reelt>0) {
-            return Math.atan(imaginart/reelt);
-        } else if (imaginart>=0 && reelt<0) {
-            return Math.atan(imaginart/reelt) + Math.PI;
-        } else if (imaginart<0 && reelt<0) {
-            return Math.atan(imaginart/reelt) - Math.PI;
-        } else if (imaginart>0 && reelt==0) {
-            return Math.PI/2;
+        if (reelt > 0) {
+            return Math.atan(imaginart / reelt);
+        } else if (reelt < 0) {
+            if (imaginart >= 0) {
+                return Math.atan(imaginart / reelt) + Math.PI;
+            } else if (imaginart < 0) {
+                return Math.atan(imaginart / reelt) - Math.PI;
+            }
+        } else if (reelt == 0) {
+            if (imaginart > 0) {
+                return Math.PI / 2;
+            } else if (imaginart < 0) {
+                return -Math.PI / 2;
+            } else if (imaginart == 0) {
+                return Double.NaN;
+            }
         }
-        else {
-            return 0;
-        }
+        return 0;
     }
 }
